@@ -4,7 +4,7 @@
 
 ## Сrop-crop-resize-resize
 
-В качестве задания предлагается выполнить проект «crop-crop». Эта утилита позволит ресайзить изображение для остальных сервисов МТС: изменения изображения рекламных баннеров, превью для альбомов и обложки фильмов в маленьком разрешении и другие.
+В качестве задания предлагается выполнить проект «crop-crop». Эта утилита позволит ресайзить изображение для остальных сервисов МТС: изменение изображений рекламных баннеров, превью для альбомов и обложки фильмов в маленьком разрешении и другие.
 
 ## Используемые технологии
 
@@ -13,7 +13,7 @@
     - Работа с консольными параметрами [picocli.info](https://picocli.info/).
     - Работа с изображением [thumbnailator](https://github.com/coobird/thumbnailator). Рекомендуем взять из неё функции обрезки  и изменения параметров картинки.
     - Библиотека для работы с изображениями и видео [marvin project](https://github.com/gabrielarchanjo/marvin-framework). Рекомендуем взять из неё  GaussianBlur и Crop.
-    - Библиотека необходимая для запуска тестов [junit5](https://github.com/junit-team/junit5).
+    - Библиотека, необходимая для запуска тестов [junit5](https://github.com/junit-team/junit5).
 
 ## Интерфейс взаимодействия
 
@@ -31,17 +31,17 @@ Options Settings:
 
 ## Описание параметров
 
-**--resize width height** — уменьшает, увеличивает картинки или задает необходимый размер для изображения. [Пример в документации](https://imagemagick.org/script/command-line-options.php#resize).
+**--resize width height** — уменьшает, увеличивает картинку или задает необходимый размер для изображения. [Пример в документации](https://imagemagick.org/script/command-line-options.php#resize).
 
 **--quality value** — задает уровень сжатия файлов JPEG / PNG. Форматы изображений могут быть JPEG и PNG, качество от 1 (самое низкое качество изображения и самое высокое сжатие) до 100 (лучшее качество, но наименее эффективное сжатие). [Пример в документации](https://imagemagick.org/script/command-line-options.php#quality).
 
-**--crop width height x y** —  Вырезает прямоугольную область изображения. Обработанное изобращение должно иметь ширину(**width**) и высоту(**height**). Точка отсчета задаётся значениями **x** и **y.** [Пример из документации](https://imagemagick.org/script/command-line-options.php#crop).
+**--crop width height x y** —  Вырезает прямоугольную область изображения. Обработанное изображения должно иметь ширину(**width**) и высоту(**height**). Точка отсчета задаётся значениями **x** и **y.** [Пример из документации](https://imagemagick.org/script/command-line-options.php#crop).
 
 **--blur radius** — добавляет размытие или увеличивает резкость. [Пример в документации](https://imagemagick.org/script/command-line-options.php#blur).
 
-**--format "outputFormat"** — конвертирует изображение в параметр "outputFormat". Параметр "outputFormat" может быть JPEG / PNG / WEBP. [Пример в документации](https://imagemagick.org/script/command-line-options.php#format).
+**--format "outputFormat"** — конвертирует изображение в "outputFormat". Параметр "outputFormat" может быть JPEG / PNG / WEBP. [Пример в документации](https://imagemagick.org/script/command-line-options.php#format).
 
-Валидация входных параметров должна быть реализована.
+Валидация входных параметров должна быть реализована. 
 
 ## Требования к проекту
 
