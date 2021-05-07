@@ -26,7 +26,7 @@ Options Settings:
   --quality value             PEG/PNG compression level
   --crop width height x y     сut out one or more rectangular regions of the image
   --blur {radius}             reduce image noise and reduce detail levels 
-  --format "outputFormat"     output formatted image characteristics
+  --format "outputFormat"     the image format type
 ```
 
 ## Описание параметров
@@ -39,7 +39,7 @@ Options Settings:
 
 **--blur radius** — добавляет размытие или увеличивает резкость. [Пример в документации](https://imagemagick.org/script/command-line-options.php#blur).
 
-**--format "outputFormat"** — конвертирует изображение в "outputFormat". Параметр "outputFormat" может быть JPEG / PNG / WEBP. [Пример в документации](https://imagemagick.org/script/command-line-options.php#format).
+**--format "outputFormat"** — конвертирует изображение в "outputFormat". Параметр "outputFormat" может быть JPEG / PNG. [Пример в документации](https://imagemagick.org/script/command-line-options.php#format).
 
 Валидация входных параметров должна быть реализована. 
 
