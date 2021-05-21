@@ -44,6 +44,7 @@ class ResizerAppTest {
         String absolutePathOutput = absolutePathInput.replaceFirst(FILM_COVER_SOURCE_NAME, FILM_COVER_TARGET_NAME);
 
         ResizerApp app = new ResizerApp();
+
         app.setInputFile(new File(absolutePathInput));
         app.setOutputFile(new File(absolutePathOutput));
         app.setResizeWidth(reducedPreviewWidth);
@@ -75,6 +76,7 @@ class ResizerAppTest {
         app.setOutputFile(new File(absolutePathOutput));
         app.setResizeWidth(reducedPreviewWidth);
         app.setResizeHeight(reducedPreviewHeight);
+
         app.setQuality(100);
         app.call();
 
