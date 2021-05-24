@@ -13,17 +13,17 @@ import java.io.IOException;
 public class ImageProcessor {
 
     public void processImage(BufferedImage image, ResizerApp resizerApp) throws IOException {
-        if(resizerApp.getResizeWidth() != null) {
+        if (resizerApp.getResizeWidth() != null) {
             image = resize(image, resizerApp);
         }
-        if(resizerApp.getCropWidth() != null) {
+        if (resizerApp.getCropWidth() != null) {
             image = crop(image, resizerApp);
         }
-        if(resizerApp.getBlurRadius() != null) {
+        if (resizerApp.getBlurRadius() != null) {
             image = blur(image, resizerApp);
         }
         Thumbnails.Builder<BufferedImage> temp = Thumbnails.of(image).scale(1);
-        if(resizerApp.getQuality() != null) {
+        if (resizerApp.getQuality() != null) {
             temp.outputQuality(resizerApp.getQuality() / 100f);
         }
         temp.outputFormat(resizerApp.getOutputFormat()).toFile(resizerApp.getOutputFilename());
@@ -32,7 +32,7 @@ public class ImageProcessor {
     private BufferedImage resize(BufferedImage image, ResizerApp resizerApp) throws IOException {
         Thumbnails.Builder<BufferedImage> temp =
                 Thumbnails.of(image).forceSize(resizerApp.getResizeWidth(), resizerApp.getResizeHeight());
-        if(resizerApp.getOutputFormat() != null) {
+        if (resizerApp.getOutputFormat() != null) {
             temp.outputFormat(resizerApp.getOutputFormat());
         }
         return temp.asBufferedImage();

@@ -48,7 +48,7 @@ public class ResizerApp implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        if(!checkArgs()) {
+        if (!checkArgs()) {
             throw new BadAttributesException("Please check params!");
         }
         ImageProcessor imageProcessor = new ImageProcessor();
@@ -57,19 +57,19 @@ public class ResizerApp implements Callable<Integer> {
     }
 
     private boolean checkArgs() {
-        if(resizeWidth != null && resizeWidth < 0 || resizeHeight != null && resizeHeight < 0) {
+        if (resizeWidth != null && resizeWidth < 0 || resizeHeight != null && resizeHeight < 0) {
             return false;
         }
-        if(cropWidth != null && cropWidth < 0 || cropHeight != null && cropHeight < 0) {
+        if (cropWidth != null && cropWidth < 0 || cropHeight != null && cropHeight < 0) {
             return false;
         }
-        if(qualityValue != null && (qualityValue < 1 || qualityValue > 100)) {
+        if (qualityValue != null && (qualityValue < 1 || qualityValue > 100)) {
             return false;
         }
-        if(blurRadius != null && blurRadius < 0) {
+        if (blurRadius != null && blurRadius < 0) {
             return false;
         }
-        if(outputFormat != null && !Arrays.asList(supportedFormats).contains(outputFormat)) {
+        if (outputFormat != null && !Arrays.asList(supportedFormats).contains(outputFormat)) {
             return false;
         }
         return true;
