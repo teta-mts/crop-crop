@@ -30,6 +30,12 @@ class ResizerAppTest {
     private static final Integer AUDIO_COVER_HEIGHT = 1425;
     private static final Integer AUDIO_COVER_WIDTH = 1425;
 
+    private static final String MOUNTAINS_SOURCE_NAME = "pejzazh-ozero-izumrud-gora-gory-sneg-les-eli.jpg";
+    private static final String MOUNTAINS_TARGET_NAME = "pejzazh-ozero-izumrud-gora-gory-sneg-les-eli.preview.jpg";
+    private static final Integer MOUNTAINS_HEIGHT = 1272;
+    private static final Integer MOUNTAINS_WIDTH = 1920;
+
+
     @Test
     public void testReducingCover() throws Exception {
         final Integer reducedPreviewWidth = FILM_COVER_WIDTH - 500;
@@ -52,24 +58,24 @@ class ResizerAppTest {
         app.setQuality(100);
         app.call();
 
+        System.out.println(absolutePathOutput);
         BufferedImage reducedPreview = ImageIO.read(new File(absolutePathOutput));
 
         assertEquals(reducedPreview.getWidth(), reducedPreviewWidth);
         assertEquals(reducedPreview.getHeight(), reducedPreviewHeight);
     }
-
+    
     @Test
-    public void testEnlargeCover() throws Exception {
-        final Integer reducedPreviewWidth = FILM_COVER_WIDTH + FILM_COVER_WIDTH;
-        final Integer reducedPreviewHeight = FILM_COVER_HEIGHT + FILM_COVER_HEIGHT;
+    public void TestResize() throws Exception {
+        final Integer reducedPreviewWidth =  AUDIO_COVER_WIDTH +  AUDIO_COVER_WIDTH;
+        final Integer reducedPreviewHeight =  AUDIO_COVER_HEIGHT + AUDIO_COVER_HEIGHT ;
 
-        URL res = getClass().getClassLoader().getResource(FILM_COVER_SOURCE_NAME);
+        URL res = getClass().getClassLoader().getResource(AUDIO_COVER_SOURCE_NAME);
         assert res != null;
 
         File file = Paths.get(res.toURI()).toFile();
         String absolutePathInput = file.getAbsolutePath();
-
-        String absolutePathOutput = absolutePathInput.replaceFirst(FILM_COVER_SOURCE_NAME, FILM_COVER_TARGET_NAME);
+        String absolutePathOutput = absolutePathInput.replaceFirst(AUDIO_COVER_SOURCE_NAME,  AUDIO_COVER_TARGET_NAME);
 
         ResizerApp app = new ResizerApp();
         app.setInputFile(new File(absolutePathInput));
@@ -81,7 +87,6 @@ class ResizerAppTest {
         app.call();
 
         BufferedImage reducedPreview = ImageIO.read(new File(absolutePathOutput));
-
         assertEquals(reducedPreview.getWidth(), reducedPreviewWidth);
         assertEquals(reducedPreview.getHeight(), reducedPreviewHeight);
     }
