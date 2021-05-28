@@ -5,8 +5,9 @@ import picocli.CommandLine;
 import javax.imageio.ImageIO;
 import java.util.concurrent.Callable;
 
+
 @CommandLine.Command(name = "resizer", mixinStandardHelpOptions = true, version = "resizer 0.0.1", description = "...")
-public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
+public class ResizerApp implements Callable<Integer> {
     public static void main(String... args) {
         int exitCode = runConsole(args);
         System.exit(exitCode);
@@ -18,8 +19,8 @@ public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        ImageProcessor imageProcessor = new ImageProcessor();
-        imageProcessor.processImage(ImageIO.read(inputFile), this);
+        //ImageProcessor imageProcessor = new ImageProcessor();
+        //imageProcessor.processImage(ImageIO.read(inputFile), this);
         return 0;
     }
 }

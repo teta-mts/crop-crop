@@ -30,7 +30,7 @@ class ResizerAppTest {
     private static final Integer AUDIO_COVER_HEIGHT = 1425;
     private static final Integer AUDIO_COVER_WIDTH = 1425;
 
-    @Test
+    /*@Test
     public void testReducingCover() throws Exception {
         final Integer reducedPreviewWidth = FILM_COVER_WIDTH - 500;
         final Integer reducedPreviewHeight = FILM_COVER_HEIGHT - 500;
@@ -55,9 +55,9 @@ class ResizerAppTest {
 
         assertEquals(reducedPreview.getWidth(), reducedPreviewWidth);
         assertEquals(reducedPreview.getHeight(), reducedPreviewHeight);
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void testEnlargeCover() throws Exception {
         final Integer reducedPreviewWidth = FILM_COVER_WIDTH + FILM_COVER_WIDTH;
         final Integer reducedPreviewHeight = FILM_COVER_HEIGHT + FILM_COVER_HEIGHT;
@@ -82,7 +82,7 @@ class ResizerAppTest {
 
         assertEquals(reducedPreview.getWidth(), reducedPreviewWidth);
         assertEquals(reducedPreview.getHeight(), reducedPreviewHeight);
-    }
+    }*/
 
 // Отказ от тестов с MD5
 // Тестирование проверки изображений это комплексная задача и сводить её к сверке MD5 нельзя.
@@ -166,7 +166,7 @@ class ResizerAppTest {
 //        assertEquals("d4e92cf8ce5c1ed04241129da3d950f1", outputCheckSum);
 //    }
 
-    @Test
+    /*@Test
     public void testTypoSourceName() throws Exception {
         final String typo = "ops!sic!";
 
@@ -188,9 +188,9 @@ class ResizerAppTest {
 
         assertEquals("Can't read input file!", generatedException.getMessage());
         assertEquals(IIOException.class, generatedException.getClass());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void testBadAttributes() throws Exception {
         URL res = getClass().getClassLoader().getResource(AUDIO_COVER_SOURCE_NAME);
         File file = Paths.get(res.toURI()).toFile();
@@ -211,5 +211,5 @@ class ResizerAppTest {
 
         assertEquals("Please check params!", generatedException.getMessage());
         assertEquals(BadAttributesException.class, generatedException.getClass());
-    }
+    }*/
 }
