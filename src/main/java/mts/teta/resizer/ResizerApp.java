@@ -20,7 +20,7 @@ public class ResizerApp implements Callable<Integer> {
         //Resize resize = new Resize(name, width, height);
         //System.out.println(name);
         //resize.resize();
-        new Compression().compress();
+        new Crop().cropping();
     }
 
     protected static int runConsole(String[] args) {

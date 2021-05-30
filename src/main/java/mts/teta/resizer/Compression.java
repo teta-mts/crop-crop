@@ -13,6 +13,6 @@ public class Compression {
         BufferedImage image = ImageIO.read(inputImage);
         int width = image.getWidth();
         int height = image.getHeight();
-        Thumbnails.of(new File("1.jpg")).size(width, height).outputQuality(0.5).toFile(new File("3.jpg"));
+        Thumbnails.of(new File("1.jpg")).size(width, height).outputQuality(0.01).toFile(new File("3.jpg"));
     }
 }
