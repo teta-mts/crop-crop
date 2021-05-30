@@ -20,7 +20,7 @@ public class ResizerApp implements Callable<Integer> {
         //Resize resize = new Resize(name, width, height);
         //System.out.println(name);
         //resize.resize();
-        new OutputFormat().setOutputFormat();
+        new Compression().compress("C:/Users/alexk/Downloads/rus.png", "-1");
     }
 
     protected static int runConsole(String[] args) {

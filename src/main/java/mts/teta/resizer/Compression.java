@@ -8,11 +8,30 @@ import java.io.File;
 import java.io.IOException;
 
 public class Compression {
-    public void compress() throws IOException {
-        File inputImage = new File("1.jpg");
-        BufferedImage image = ImageIO.read(inputImage);
-        int width = image.getWidth();
-        int height = image.getHeight();
-        Thumbnails.of(new File("1.jpg")).size(width, height).outputQuality(0.01).toFile(new File("3.jpg"));
+    public void compress(String inputImagePath, String qualityValue) {
+        File inputImage = new File(inputImagePath);
+        Checks compressCheck = new Checks();
+        if (compressCheck.checkImagePath(inputImagePath)) {
+            if (compressCheck.checkIfParameterIsNumber(qualityValue)) {
+                float qualityValueFloat = Float.parseFloat(qualityValue) / 100;
+                if (compressCheck.checkIfParameterIsAllowableSize(qualityValue, 0, 100)) {
+                    ImageParams imageParameter = new ImageParams();
+                    imageParameter.setImagePath(inputImagePath);
+                    imageParameter.setImageName(inputImagePath);
+                    imageParameter.setImagePostfixName(qualityValue);
+                    imageParameter.setImageFormat(inputImagePath);
+
+                    try {
+                        BufferedImage image = ImageIO.read(inputImage);
+                        Thumbnails.of(inputImage)
+                                .size(image.getWidth(), image.getHeight())
+                                .outputQuality(qualityValueFloat)
+                                .toFile(imageParameter.getNewFilePath());
+                    } catch (IOException e) {
+                        System.out.println("Smth went wrong");
+                    }
+                }
+            }
+        }
     }
 }
