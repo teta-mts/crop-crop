@@ -19,7 +19,7 @@
 
 ```bash
 Version: name version https://gitlab.com/link/
-Available formats: jpeg png webp
+Available formats: jpeg png
 Usage: convert input-file [options ...] output-file
 Options Settings:
   --resize width height       resize the image
