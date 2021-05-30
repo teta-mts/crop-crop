@@ -38,8 +38,9 @@ class ResizerAppTest {
 
     @Test
     public void testReducingCover() throws Exception {
-        final Integer reducedPreviewWidth = FILM_COVER_WIDTH - 500;
-        final Integer reducedPreviewHeight = FILM_COVER_HEIGHT - 500;
+        final Integer reducedPreviewWidth = FILM_COVER_WIDTH-100;
+        final Integer reducedPreviewHeight = FILM_COVER_HEIGHT-100;
+        System.out.println(reducedPreviewHeight);
 
         URL res = getClass().getClassLoader().getResource(FILM_COVER_SOURCE_NAME);
         assert res != null;
@@ -58,38 +59,40 @@ class ResizerAppTest {
         app.setQuality(100);
         app.call();
 
+        BufferedImage reducedPreview = ImageIO.read(new File(absolutePathOutput));
+
+        System.out.println(reducedPreview.getHeight());
         System.out.println(absolutePathOutput);
-        BufferedImage reducedPreview = ImageIO.read(new File(absolutePathOutput));
 
         assertEquals(reducedPreview.getWidth(), reducedPreviewWidth);
         assertEquals(reducedPreview.getHeight(), reducedPreviewHeight);
     }
-    
-    @Test
-    public void TestResize() throws Exception {
-        final Integer reducedPreviewWidth =  AUDIO_COVER_WIDTH +  AUDIO_COVER_WIDTH;
-        final Integer reducedPreviewHeight =  AUDIO_COVER_HEIGHT + AUDIO_COVER_HEIGHT ;
 
-        URL res = getClass().getClassLoader().getResource(AUDIO_COVER_SOURCE_NAME);
-        assert res != null;
-
-        File file = Paths.get(res.toURI()).toFile();
-        String absolutePathInput = file.getAbsolutePath();
-        String absolutePathOutput = absolutePathInput.replaceFirst(AUDIO_COVER_SOURCE_NAME,  AUDIO_COVER_TARGET_NAME);
-
-        ResizerApp app = new ResizerApp();
-        app.setInputFile(new File(absolutePathInput));
-        app.setOutputFile(new File(absolutePathOutput));
-        app.setResizeWidth(reducedPreviewWidth);
-        app.setResizeHeight(reducedPreviewHeight);
-
-        app.setQuality(100);
-        app.call();
-
-        BufferedImage reducedPreview = ImageIO.read(new File(absolutePathOutput));
-        assertEquals(reducedPreview.getWidth(), reducedPreviewWidth);
-        assertEquals(reducedPreview.getHeight(), reducedPreviewHeight);
-    }
+//    @Test
+//    public void TestResize() throws Exception {
+//        final Integer reducedPreviewWidth =  AUDIO_COVER_WIDTH +  AUDIO_COVER_WIDTH;
+//        final Integer reducedPreviewHeight =  AUDIO_COVER_HEIGHT + AUDIO_COVER_HEIGHT ;
+//
+//        URL res = getClass().getClassLoader().getResource(AUDIO_COVER_SOURCE_NAME);
+//        assert res != null;
+//
+//        File file = Paths.get(res.toURI()).toFile();
+//        String absolutePathInput = file.getAbsolutePath();
+//        String absolutePathOutput = absolutePathInput.replaceFirst(AUDIO_COVER_SOURCE_NAME,  AUDIO_COVER_TARGET_NAME);
+//
+//        ResizerApp app = new ResizerApp();
+//        app.setInputFile(new File(absolutePathInput));
+//        app.setOutputFile(new File(absolutePathOutput));
+//        app.setResizeWidth(reducedPreviewWidth);
+//        app.setResizeHeight(reducedPreviewHeight);
+//
+//        app.setQuality(100);
+//        app.call();
+//
+//        BufferedImage reducedPreview = ImageIO.read(new File(absolutePathOutput));
+//        assertEquals(reducedPreview.getWidth(), reducedPreviewWidth);
+//        assertEquals(reducedPreview.getHeight(), reducedPreviewHeight);
+//    }
 
 // Отказ от тестов с MD5
 // Тестирование проверки изображений это комплексная задача и сводить её к сверке MD5 нельзя.
@@ -162,11 +165,16 @@ class ResizerAppTest {
 //
 //        ResizerApp app = new ResizerApp();
 //        app.setInputFile(new File(absolutePathInput));
+//        System.out.println(absolutePathOutput);
 //        app.setOutputFile(new File(absolutePathOutput));
-//        app.setResizeWidth(AUDIO_COVER_WIDTH);
-//        app.setResizeHeight(AUDIO_COVER_HEIGHT);
+//        app.setResizeWidth(AUDIO_COVER_WIDTH-100);
+//        app.setResizeHeight(AUDIO_COVER_HEIGHT-100);
 //        app.setQuality(100);
 //        app.setBlurRadius(BOOK_COVER_BLUR_RADIUS);
+//        app.setCropWidth(AUDIO_COVER_WIDTH-1000);
+//        app.setCropHeight(AUDIO_COVER_HEIGHT-1000);
+//        app.setX(0);
+//        app.setY(0);
 //        app.call();
 //
 //        String outputCheckSum = getMD5(absolutePathOutput);

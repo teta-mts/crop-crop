@@ -1,7 +1,9 @@
 package mts.teta.resizer;
 
+import marvin.io.MarvinImageIO;
 import mts.teta.resizer.imageprocessor.BadAttributesException;
 import net.coobird.thumbnailator.Thumbnails;
+import org.marvinproject.image.blur.gaussianBlur.GaussianBlur;
 import picocli.CommandLine;
 
 import java.awt.image.BufferedImage;
@@ -75,6 +77,28 @@ public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
         this.QualityVal = quality;
     }
 
+    public void setBlurRadius(Integer radius){
+        this.BlurRadius = radius;
+    }
+
+    public void setCropWidth(Integer width){
+        this.CropWidth = width;
+    }
+
+    public void setCropHeight(Integer height){
+        this.CropHeight = height;
+    }
+
+    public void setX(Integer x){
+        this.X = x;
+    }
+
+    public void setY(Integer y){
+        this.Y = y;
+    }
+
+
+
     @Override
     public Integer call() throws Exception {
         ImageProcessor imageProcessor = new ImageProcessor();
@@ -85,45 +109,49 @@ public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
 
 class ImageProcessor{
 
-    public void processImage(BufferedImage ImageToProcess, ResizerApp resizerApp ) throws BadAttributesException {
-
-        if (resizerApp.ResizeWidth!=null && resizerApp.ResizeHeight!=null){
-
-            if (resizerApp.ResizeWidth<0 || resizerApp.ResizeHeight <0) throw new BadAttributesException("Please check params!");
-            Thumbnails.of(ImageToProcess).size(resizerApp.ResizeWidth, resizerApp.ResizeHeight);
-        }
-        if (resizerApp.QualityVal!=null){
-
-            if (resizerApp.QualityVal<0) throw new BadAttributesException("Please check params!");
-            Integer QualityReduced = resizerApp.QualityVal/100;
-            Thumbnails.of(ImageToProcess).outputQuality(QualityReduced);
-        }
-
-        Thumbnails.of(ImageToProcess).outputFormat(resizerApp.OutFormat);
+    public void processImage(BufferedImage ImageToProcess, ResizerApp resizerApp) throws BadAttributesException {
 
         MarvinImage InputImage = new MarvinImage(ImageToProcess);
         MarvinImage OutputImage = new MarvinImage();
 
-        if (resizerApp.X!=null && resizerApp.Y!=null && resizerApp.CropWidth!=null && resizerApp.CropHeight!=null ){
-
+        if (resizerApp.X!=null && resizerApp.Y!=null && resizerApp.CropWidth!=null && resizerApp.CropHeight!=null){
             if (resizerApp.X<0 || resizerApp.Y<0 || resizerApp.CropHeight<0 || resizerApp.CropWidth<0) throw new BadAttributesException("Please check params!");
+
             MarvinPluginCollection.crop(InputImage, OutputImage, resizerApp.X, resizerApp.Y, resizerApp.CropWidth, resizerApp.CropHeight);
+
+            String outputPath = new String(resizerApp.OutputFile.getAbsolutePath());
+            MarvinImageIO.saveImage(OutputImage,outputPath);
         }
 
         if (resizerApp.BlurRadius!=null){
-
             if (resizerApp.BlurRadius<0) throw new BadAttributesException("Please check params!");
-            MarvinPluginCollection.gaussianBlur(InputImage, OutputImage, resizerApp.BlurRadius);
+
+            GaussianBlur gaussianBlur = new GaussianBlur();
+            gaussianBlur.load();
+            gaussianBlur.setAttribute("radius", resizerApp.BlurRadius);
+            gaussianBlur.process(InputImage, OutputImage );
+            String outputPath = new String(resizerApp.OutputFile.getAbsolutePath());
+            MarvinImageIO.saveImage(OutputImage,outputPath);
+
+            MarvinPluginCollection.gaussianBlur(OutputImage, InputImage,resizerApp.BlurRadius);
+
+
+       }
+
+        if (resizerApp.ResizeWidth!=null && resizerApp.ResizeHeight!=null && resizerApp.QualityVal!=null){
+
+            if (resizerApp.ResizeWidth<0 || resizerApp.ResizeHeight <0 || resizerApp.QualityVal<0) throw new BadAttributesException("Please check params!");
+
+            try {
+                Integer QualityReduced = resizerApp.QualityVal/100;
+                Thumbnails.of(ImageToProcess).size(resizerApp.ResizeWidth, resizerApp.ResizeHeight).outputQuality(QualityReduced).outputFormat(resizerApp.OutFormat).toFile(resizerApp.OutputFile);
+            }
+            catch (java.io.IOException e) {
+            }
+
+            System.out.println(resizerApp.ResizeHeight);
         }
 
-        try {
-            BufferedImage OutputImageBuff =  OutputImage.getBufferedImage();
-            System.out.println(resizerApp.OutputFile.getAbsolutePath());
-            ImageIO.write(OutputImageBuff, "jpg", resizerApp.OutputFile);
-        }
-        catch (java.io.IOException e) {
-        }
-
-
-    }
+  }
 }
+
