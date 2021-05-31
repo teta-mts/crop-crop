@@ -19,23 +19,19 @@ public class Compression {
         }
     }
 
-    private void getCompressedImage(String inputImagePath, String qualityValue){
+    private void getCompressedImage(String inputImagePath, String qualityValue) {
         File inputImage = new File(inputImagePath);
-        ImageParams imageParameter = new ImageParams();
         float qualityValueFloat = Float.parseFloat(qualityValue) / 100;
-        imageParameter.setImagePath(inputImagePath);
-        imageParameter.setImageName(inputImagePath);
-        imageParameter.setImagePostfixName(qualityValue);
-        imageParameter.setImageFormat(inputImagePath);
-
+        ImageParams imageParameter = new ImageParams();
+        imageParameter.setAllParamsForNewImage(inputImagePath, String.valueOf(qualityValueFloat));
         try {
             BufferedImage image = ImageIO.read(inputImage);
             Thumbnails.of(inputImage)
                     .size(image.getWidth(), image.getHeight())
                     .outputQuality(qualityValueFloat)
-                    .toFile(imageParameter.getNewFilePath());
+                    .toFile(new File(imageParameter.getNewFilePath()));
         } catch (IOException e) {
-            System.out.println("Smth went wrong");
+            e.printStackTrace();
         }
     }
 }

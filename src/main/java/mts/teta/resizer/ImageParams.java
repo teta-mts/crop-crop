@@ -1,61 +1,49 @@
 package mts.teta.resizer;
 
-import java.io.File;
-
 public class ImageParams {
     private String imagePath;
     private String imageName;
     private String imageFormat;
     private String imagePostfixName;
 
-    //Get the output image path as the same for the input image but without its name
-    public String getImagePath() {
-        return imagePath;
+    //Set the output image path as the same for the input image but without its name
+    private void setImagePath(String inputImagePath) {
+        this.imagePath = inputImagePath.substring(0, inputImagePath.lastIndexOf("/") + 1);
     }
 
-    //Get the input image name
-    public String getImageName() {
-        return imageName;
+    //Set the output image name as the same name of an input image
+    private void setImageName(String inputImagePath) {
+        this.imageName = inputImagePath.substring(inputImagePath.lastIndexOf("/") + 1, inputImagePath.lastIndexOf("."));
     }
 
-    public String getImagePostfixName() {
-        return imagePostfixName;
+    //Set the format of an output image from the input one
+    private void setImageFormat(String inputImagePath) {
+        this.imageFormat = inputImagePath.substring(inputImagePath.lastIndexOf(".") + 1);
     }
 
-    //Get the format of an image
-    public String getImageFormat(){
-        return imageFormat;
-    }
-
-    public void setImagePath(String inputImagePath) {
-        this.imagePath = inputImagePath.substring(0, inputImagePath.lastIndexOf("/")+1);
-    }
-
-    public void setImageName(String inputImagePath) {
-        this.imageName = inputImagePath.substring(inputImagePath.lastIndexOf("/")+1, inputImagePath.lastIndexOf("."));
-    }
-
-    public void setImageFormat(String inputImagePath){
-        this.imageFormat = inputImagePath.substring(inputImagePath.lastIndexOf(".")+1);
-    }
-
-    public void setImagePostfixName(String imagePostfixName) {
+    //Set the postfix name for an output image from params indicating in a command
+    private void setImagePostfixName(String imagePostfixName) {
         this.imagePostfixName = imagePostfixName;
     }
 
-    public void setNewImageName(String newImageName) {
-        this.imageName = newImageName;
+    //Set all params (path, name, postfix, name, format) to a new image
+    public void setAllParamsForNewImage(String inputImagePath, String parameter) {
+        setImagePath(inputImagePath);
+        setImageName(inputImagePath);
+        setImagePostfixName(parameter);
+        setImageFormat(inputImagePath);
     }
 
-    public void setNewImageFormat(String newImageFormat){
-        this.imageFormat = newImageFormat;
+    //Set all params (path, name, postfix, name, format) to an image with the new format
+    public void setAllParamsForNewFormatImage(String inputImagePath, String newFormat) {
+        setImagePath(inputImagePath);
+        setImageName(inputImagePath);
+        setImagePostfixName("");
+        setImageFormat(newFormat);
     }
 
-    public void setNewImagePath(String newImagePath){
-        this.imagePath = newImagePath;
-    }
-
-    public File getNewFilePath(){
-        return new File(imagePath + imageName + imagePostfixName + "." + imageFormat);
+    //Get the file path of an output image
+    public String getNewFilePath() {
+        return imagePath + imageName + imagePostfixName + "." + imageFormat;
     }
 }
