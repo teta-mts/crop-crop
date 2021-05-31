@@ -27,8 +27,8 @@ class ResizerAppTest {
 
     private static final String AUDIO_COVER_SOURCE_NAME = "Metallica_Kill_Em_All_1983.jpeg";
     private static final String AUDIO_COVER_TARGET_NAME = "Metallica_Kill_Em_All_1983.preview.jpeg";
-    private static final Integer AUDIO_COVER_HEIGHT = 1425;
-    private static final Integer AUDIO_COVER_WIDTH = 1425;
+    private static final Integer AUDIO_COVER_HEIGHT = 483;
+    private static final Integer AUDIO_COVER_WIDTH = 483;
 
     private static final String MOUNTAINS_SOURCE_NAME = "pejzazh-ozero-izumrud-gora-gory-sneg-les-eli.jpg";
     private static final String MOUNTAINS_TARGET_NAME = "pejzazh-ozero-izumrud-gora-gory-sneg-les-eli.preview.jpg";
@@ -38,10 +38,10 @@ class ResizerAppTest {
 
     @Test
     public void testReducingCover() throws Exception {
+
         final Integer reducedPreviewWidth = FILM_COVER_WIDTH-100;
         final Integer reducedPreviewHeight = FILM_COVER_HEIGHT-100;
         System.out.println(reducedPreviewHeight);
-
         URL res = getClass().getClassLoader().getResource(FILM_COVER_SOURCE_NAME);
         assert res != null;
 
@@ -51,7 +51,6 @@ class ResizerAppTest {
         String absolutePathOutput = absolutePathInput.replaceFirst(FILM_COVER_SOURCE_NAME, FILM_COVER_TARGET_NAME);
 
         ResizerApp app = new ResizerApp();
-
         app.setInputFile(new File(absolutePathInput));
         app.setOutputFile(new File(absolutePathOutput));
         app.setResizeWidth(reducedPreviewWidth);
@@ -165,20 +164,22 @@ class ResizerAppTest {
 //
 //        ResizerApp app = new ResizerApp();
 //        app.setInputFile(new File(absolutePathInput));
+//
 //        System.out.println(absolutePathOutput);
+//        System.out.println(absolutePathInput);
 //        app.setOutputFile(new File(absolutePathOutput));
-//        app.setResizeWidth(AUDIO_COVER_WIDTH-100);
-//        app.setResizeHeight(AUDIO_COVER_HEIGHT-100);
-//        app.setQuality(100);
+////        app.setResizeWidth(AUDIO_COVER_WIDTH-100);
+////        app.setResizeHeight(AUDIO_COVER_HEIGHT-100);
+////        app.setQuality(100);
 //        app.setBlurRadius(BOOK_COVER_BLUR_RADIUS);
-//        app.setCropWidth(AUDIO_COVER_WIDTH-1000);
-//        app.setCropHeight(AUDIO_COVER_HEIGHT-1000);
+//        app.setCropWidth(AUDIO_COVER_WIDTH-100);
+//        app.setCropHeight(AUDIO_COVER_HEIGHT-100);
 //        app.setX(0);
 //        app.setY(0);
 //        app.call();
 //
 //        String outputCheckSum = getMD5(absolutePathOutput);
-//        assertEquals("d4e92cf8ce5c1ed04241129da3d950f1", outputCheckSum);
+//        //assertEquals("d4e92cf8ce5c1ed04241129da3d950f1", outputCheckSum);
 //    }
 
     @Test

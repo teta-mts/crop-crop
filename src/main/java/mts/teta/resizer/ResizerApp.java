@@ -114,6 +114,7 @@ class ImageProcessor{
         MarvinImage InputImage = new MarvinImage(ImageToProcess);
         MarvinImage OutputImage = new MarvinImage();
 
+
         if (resizerApp.X!=null && resizerApp.Y!=null && resizerApp.CropWidth!=null && resizerApp.CropHeight!=null){
             if (resizerApp.X<0 || resizerApp.Y<0 || resizerApp.CropHeight<0 || resizerApp.CropWidth<0) throw new BadAttributesException("Please check params!");
 
@@ -125,16 +126,10 @@ class ImageProcessor{
 
         if (resizerApp.BlurRadius!=null){
             if (resizerApp.BlurRadius<0) throw new BadAttributesException("Please check params!");
-
-            GaussianBlur gaussianBlur = new GaussianBlur();
-            gaussianBlur.load();
-            gaussianBlur.setAttribute("radius", resizerApp.BlurRadius);
-            gaussianBlur.process(InputImage, OutputImage );
+            MarvinPluginCollection.gaussianBlur(InputImage.clone(),InputImage, resizerApp.BlurRadius);
             String outputPath = new String(resizerApp.OutputFile.getAbsolutePath());
-            MarvinImageIO.saveImage(OutputImage,outputPath);
-
-            MarvinPluginCollection.gaussianBlur(OutputImage, InputImage,resizerApp.BlurRadius);
-
+            System.out.println(InputImage.clone().getHeight());
+            MarvinImageIO.saveImage(InputImage, outputPath);
 
        }
 
