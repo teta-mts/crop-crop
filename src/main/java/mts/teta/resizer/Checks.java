@@ -32,34 +32,9 @@ public class Checks {
         } else return true;
     }
 
-    //If an image with the same name already exists than its copy with a serial number is created
-    /*public File makeCopyImage(File image, String imagePath, String imageName, String imageFormat) {
-        if (image.exists()) {
-            ImageParams imageParameter = new ImageParams();
-
-            imageParameter.setNewImagePath(imagePath);
-            imageParameter.setNewImageName(imageName);
-            imageParameter.setImagePostfixName("(1)");
-            imageParameter.setNewImageFormat(imageFormat);
-
-            File newImage = imageParameter.getNewFilePath();
-            if (newImage.exists()) {
-                StringBuilder serialNumber = new StringBuilder("");
-                String newImageName = imageName + "(1)";
-
-                for (char letterInter : newImageName.substring(
-                        newImageName.lastIndexOf('('), newImageName.lastIndexOf(')'))
-                        .toCharArray()) {
-                    serialNumber.append(letterInter);
-                }
-
-                imageParameter.setNewImagePath(imagePath);
-                imageParameter.setNewImageName(imageName);
-                imageParameter.setImagePostfixName("(" + (Integer.parseInt(serialNumber.toString()) + 1) + ")");
-                imageParameter.setNewImageFormat(imageFormat);
-
-                return imageParameter.getNewFilePath();
-            } else return newImage;
-        } else return image;
-    }*/
+    //The output format must be PNG/JPEG (JPG)
+    public boolean checkOutputFormat(String outputFormat) {
+        return outputFormat.equalsIgnoreCase("png") || outputFormat.equalsIgnoreCase("jpg")
+                || outputFormat.equalsIgnoreCase("jpeg");
+    }
 }
