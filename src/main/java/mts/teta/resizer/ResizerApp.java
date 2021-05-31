@@ -95,8 +95,6 @@ public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
         this.Y = y;
     }
 
-
-
     @Override
     public Integer call() throws Exception {
         ImageProcessor imageProcessor = new ImageProcessor();
