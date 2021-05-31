@@ -3,9 +3,7 @@ package mts.teta.resizer;
 import marvin.io.MarvinImageIO;
 import mts.teta.resizer.imageprocessor.BadAttributesException;
 import net.coobird.thumbnailator.Thumbnails;
-import org.marvinproject.image.blur.gaussianBlur.GaussianBlur;
 import picocli.CommandLine;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
