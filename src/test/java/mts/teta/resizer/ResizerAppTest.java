@@ -212,4 +212,58 @@ class ResizerAppTest {
         assertEquals("Please check params!", generatedException.getMessage());
         assertEquals(BadAttributesException.class, generatedException.getClass());
     }
+
+    @Test
+    public void testCropCover() throws Exception {
+        final Integer cropWidth = FILM_COVER_WIDTH - 500;
+        final Integer cropHeight = FILM_COVER_HEIGHT - 1000;
+        final Integer CROP_X = 500;
+        final Integer CROP_Y = 300;
+
+        URL res = getClass().getClassLoader().getResource(FILM_COVER_SOURCE_NAME);
+        assert res != null;
+
+        File file = Paths.get(res.toURI()).toFile();
+        String absolutePathInput = file.getAbsolutePath();
+
+        String absolutePathOutput = absolutePathInput.replaceFirst(FILM_COVER_SOURCE_NAME, FILM_COVER_TARGET_NAME);
+
+        ResizerApp app = new ResizerApp();
+        app.setInputFile(new File(absolutePathInput));
+        app.setOutputFile(new File(absolutePathOutput));
+        app.setCropWidth(cropWidth);
+        app.setCropHeight(cropHeight);
+        app.setCropX(CROP_X);
+        app.setCropY(CROP_Y);
+        app.call();
+
+        BufferedImage reducedPreview = ImageIO.read(new File(absolutePathOutput));
+
+        assertEquals(reducedPreview.getWidth(), cropWidth);
+        assertEquals(reducedPreview.getHeight(), cropHeight);
+    }
+
+    @Test
+    public void testBlurCover() throws Exception {
+        final Integer radius = 5;
+
+        URL res = getClass().getClassLoader().getResource(FILM_COVER_SOURCE_NAME);
+        assert res != null;
+
+        File file = Paths.get(res.toURI()).toFile();
+        String absolutePathInput = file.getAbsolutePath();
+
+        String absolutePathOutput = absolutePathInput.replaceFirst(FILM_COVER_SOURCE_NAME, FILM_COVER_TARGET_NAME);
+
+        ResizerApp app = new ResizerApp();
+        app.setInputFile(new File(absolutePathInput));
+        app.setOutputFile(new File(absolutePathOutput));
+        app.setBlurRadius(radius);
+        app.call();
+
+        BufferedImage reducedPreview = ImageIO.read(new File(absolutePathOutput));
+
+//        assertEquals(reducedPreview.getWidth(), cropWidth);
+//        assertEquals(reducedPreview.getHeight(), cropHeight);
+    }
 }
