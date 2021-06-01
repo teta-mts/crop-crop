@@ -5,7 +5,7 @@ import net.coobird.thumbnailator.Thumbnails;
 import java.io.File;
 import java.io.IOException;
 
-public class Resize {
+public class Resizing {
     public void resize(String inputImagePath, String width, String height) {
         Checks resizeCheck = new Checks();
         if (resizeCheck.checkImagePath(inputImagePath)) {
