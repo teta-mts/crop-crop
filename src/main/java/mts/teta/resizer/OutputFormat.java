@@ -9,8 +9,10 @@ public class OutputFormat {
     public void outputFormat(String inputImagePath, String outputFormat) {
         Checks formatChecks = new Checks();
         if (formatChecks.checkImagePath(inputImagePath)) {
-            if (formatChecks.checkOutputFormat(outputFormat)) {
-                getOutputFormat(inputImagePath, outputFormat);
+            if (formatChecks.checkInputImageFormat(inputImagePath)) {
+                if (formatChecks.checkOutputFormat(outputFormat)) {
+                    getOutputFormat(inputImagePath, outputFormat);
+                }
             }
         }
     }

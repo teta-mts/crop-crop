@@ -11,6 +11,17 @@ public class Checks {
         } else return true;
     }
 
+    public boolean checkInputImageFormat(String inputImagePath) {
+        String format = inputImagePath.substring(inputImagePath.lastIndexOf(".") + 1);
+        if (format.equalsIgnoreCase("jpg") || format.equalsIgnoreCase("jpeg")
+                || format.equalsIgnoreCase("png")) {
+            return true;
+        } else {
+            System.out.println("Invalid format!");
+            return false;
+        }
+    }
+
     //A parameter for resizing must be positive integer
     public boolean checkIfParameterIsNumber(String parameter) {
         for (char element : parameter.toCharArray()) {
@@ -24,6 +35,7 @@ public class Checks {
 
     //The allowable size for resizing is more than 1 and less than 1920 for resizing
     //A value for compression must be between 0 and 100
+    //A radius for blurring between 0 and 63
     public boolean checkIfParameterIsAllowableSize(String parameter, int from, int to) {
         int parameterInt = Integer.parseInt(parameter);
         if (parameterInt > to || parameterInt < from) {
@@ -37,4 +49,6 @@ public class Checks {
         return outputFormat.equalsIgnoreCase("png") || outputFormat.equalsIgnoreCase("jpg")
                 || outputFormat.equalsIgnoreCase("jpeg");
     }
+
+
 }

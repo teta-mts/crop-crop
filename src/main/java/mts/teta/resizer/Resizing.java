@@ -9,10 +9,12 @@ public class Resizing {
     public void resize(String inputImagePath, String width, String height) {
         Checks resizeCheck = new Checks();
         if (resizeCheck.checkImagePath(inputImagePath)) {
-            if (resizeCheck.checkIfParameterIsNumber(width) && resizeCheck.checkIfParameterIsNumber(height)) {
-                if (resizeCheck.checkIfParameterIsAllowableSize(width, 1, 1920)
-                        && resizeCheck.checkIfParameterIsAllowableSize(height, 1, 1920)) {
-                    getResizedImage(inputImagePath, Integer.parseInt(width), Integer.parseInt(height));
+            if (resizeCheck.checkInputImageFormat(inputImagePath)) {
+                if (resizeCheck.checkIfParameterIsNumber(width) && resizeCheck.checkIfParameterIsNumber(height)) {
+                    if (resizeCheck.checkIfParameterIsAllowableSize(width, 1, 1920)
+                            && resizeCheck.checkIfParameterIsAllowableSize(height, 1, 1920)) {
+                        getResizedImage(inputImagePath, Integer.parseInt(width), Integer.parseInt(height));
+                    }
                 }
             }
         }

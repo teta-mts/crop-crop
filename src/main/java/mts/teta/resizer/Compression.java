@@ -11,9 +11,11 @@ public class Compression {
     public void compress(String inputImagePath, String qualityValue) {
         Checks compressCheck = new Checks();
         if (compressCheck.checkImagePath(inputImagePath)) {
-            if (compressCheck.checkIfParameterIsNumber(qualityValue)) {
-                if (compressCheck.checkIfParameterIsAllowableSize(qualityValue, 0, 100)) {
-                    getCompressedImage(inputImagePath, qualityValue);
+            if (compressCheck.checkInputImageFormat(inputImagePath)) {
+                if (compressCheck.checkIfParameterIsNumber(qualityValue)) {
+                    if (compressCheck.checkIfParameterIsAllowableSize(qualityValue, 0, 100)) {
+                        getCompressedImage(inputImagePath, qualityValue);
+                    }
                 }
             }
         }

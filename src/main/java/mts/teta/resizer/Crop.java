@@ -14,20 +14,22 @@ public class Crop {
     public void cropping(String inputImagePath, String x, String y, String width, String height) {
         Checks cropCheck = new Checks();
         if (cropCheck.checkImagePath(inputImagePath)) {
-            if (cropCheck.checkIfParameterIsNumber(x) && cropCheck.checkIfParameterIsNumber(y)
-                    && cropCheck.checkIfParameterIsNumber(width) && cropCheck.checkIfParameterIsNumber(height)) {
-                BufferedImage image = null;
-                try {
-                    image = ImageIO.read(new File(inputImagePath));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                assert image != null;
-                if (cropCheck.checkIfParameterIsAllowableSize(x, 0, image.getWidth())
-                        && cropCheck.checkIfParameterIsAllowableSize(y, 0, image.getHeight())
-                        && cropCheck.checkIfParameterIsAllowableSize(width, 0, image.getWidth() - Integer.parseInt(x))
-                        && cropCheck.checkIfParameterIsAllowableSize(width, 0, image.getHeight() - Integer.parseInt(y))) {
-                    getCroppedImage(inputImagePath, x, y, width, height);
+            if (cropCheck.checkInputImageFormat(inputImagePath)) {
+                if (cropCheck.checkIfParameterIsNumber(x) && cropCheck.checkIfParameterIsNumber(y)
+                        && cropCheck.checkIfParameterIsNumber(width) && cropCheck.checkIfParameterIsNumber(height)) {
+                    BufferedImage image = null;
+                    try {
+                        image = ImageIO.read(new File(inputImagePath));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    assert image != null;
+                    if (cropCheck.checkIfParameterIsAllowableSize(x, 0, image.getWidth())
+                            && cropCheck.checkIfParameterIsAllowableSize(y, 0, image.getHeight())
+                            && cropCheck.checkIfParameterIsAllowableSize(width, 0, image.getWidth() - Integer.parseInt(x))
+                            && cropCheck.checkIfParameterIsAllowableSize(width, 0, image.getHeight() - Integer.parseInt(y))) {
+                        getCroppedImage(inputImagePath, x, y, width, height);
+                    }
                 }
             }
         }
