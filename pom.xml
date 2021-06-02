@@ -63,7 +63,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>mts.teta.resizer.ResizerApp</mainClass>
+                            <mainClass>mts.teta.resizer.app.ResizerApp</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

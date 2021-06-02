@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Paths;
+import mts.teta.resizer.app.ResizerApp;
 
-import static mts.teta.resizer.utils.MD5.getMD5;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ResizerAppTest {
@@ -67,7 +67,9 @@ class ResizerAppTest {
 
         File file = Paths.get(res.toURI()).toFile();
         String absolutePathInput = file.getAbsolutePath();
-
+        System.out.println("!!!!!!!!!!!!!");
+        System.out.println(absolutePathInput);
+        System.out.println(absolutePathInput.replaceFirst(FILM_COVER_SOURCE_NAME, FILM_COVER_TARGET_NAME));
         String absolutePathOutput = absolutePathInput.replaceFirst(FILM_COVER_SOURCE_NAME, FILM_COVER_TARGET_NAME);
 
         ResizerApp app = new ResizerApp();
