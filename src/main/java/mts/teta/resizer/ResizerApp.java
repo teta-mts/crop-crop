@@ -6,43 +6,106 @@ import java.util.Scanner;
 
 @CommandLine.Command(name = "convert", mixinStandardHelpOptions = true, version = "version 0.0.3",
         description = "Available formats: jpeg png\n" +
-                "Usage: convert input-file [options ...] output-file\n" +
+                "Usage: convert input-file [options ...]\n" +
                 "Options Settings:")
-class ResizerApp implements Runnable {
+public class ResizerApp implements Runnable {
     @CommandLine.Spec
     CommandLine.Model.CommandSpec spec;
-
     @CommandLine.Parameters(description = "path of an input-file", interactive = true, hidden = true)
     String file;
-    @CommandLine.Option(names = "--resize", description = "resize the image", interactive = true)
-    String width;
-    String height;
+    /*@CommandLine.Option(names = "--resize", description = "resize the image")
+    boolean resize = true;
+    @CommandLine.Option(names = "--quality", description = "JPEG/PNG compression level")
+    boolean compression = true;
+    @CommandLine.Option(names = "--crop", description = "@|fg(magenta)cut|@ out one rectangular area of the image")
+    boolean crop = true;
+    @CommandLine.Option(names = "--blur", description = "reduce image noise detail levels")
+    boolean blur = true;
+    @CommandLine.Option(names = "--format @|bold,fg(green)\"outputFormat\"|@", description = "the image @|fg(magenta)format type|@")
+    boolean format = true;*/
 
     @Override
     public void run() {
-        String command = new Scanner(System.in).nextLine();
-        String[] args = command.split(" ");
-        if(args.length == 5) setParams(args);
-        else throw new CommandLine.ParameterException(spec.commandLine(), "Error: enter an option setting");
-        if(validate()) new Resizing().resize(file, width, height);
+        String commandString = new Scanner(System.in).nextLine();
+        if (commandString != null) {
+            if (!commandString.trim().isEmpty()) {
+                menu(commandString);
+            } else System.out.println("Write a command");
+        } else System.out.println("Write a command");
     }
 
-    private boolean validate() {
-        if (missing(file) || missing(width) || missing(height)) {
+    private void menu(String commandString) {
+        String[] arr = commandString.split(" ");
+        if (arr[0].equalsIgnoreCase("convert")) {
+            if (arr.length > 2) {
+                this.file = arr[1];
+                if (validate(this.file)) {
+                    switch (arr[2]) {
+                        case "--resize":
+                            if (ifCommandLengthRight(arr, 5)) {
+                                String width = arr[3];
+                                String height = arr[4];
+                                if (validate(width) && validate(height)) {
+                                    new Resizing().resize(this.file, width, height);
+                                }
+                            }
+                            break;
+                        case "--compression":
+                            if (ifCommandLengthRight(arr, 4)) {
+                                String value = arr[3];
+                                if (validate(value)) {
+                                    new Compression().compress(this.file, value);
+                                }
+                            }
+                            break;
+                        case "crop":
+                            if (ifCommandLengthRight(arr, 7)) {
+                                String cropWidth = arr[5];
+                                String cropHeight = arr[6];
+                                String x = arr[3];
+                                String y = arr[4];
+                                if (validate(cropWidth) && validate(cropHeight) && validate(x) && validate(y)) {
+                                    new Crop().cropping(this.file, x, y, cropWidth, cropHeight);
+                                }
+                            }
+                            break;
+                        case "--blur":
+                            if (ifCommandLengthRight(arr, 4)) {
+                                String radius = arr[3];
+                                if (validate(radius)) {
+                                    new Blurring().blurring(this.file, radius);
+                                }
+                            }
+                            break;
+                        case "--outputFormat":
+                            if (ifCommandLengthRight(arr, 4)) {
+                                String outputFormat = arr[3];
+                                if (validate(outputFormat)) {
+                                    new OutputFormat().outputFormat(this.file, outputFormat);
+                                }
+                            }
+                            break;
+                        default:
+                            System.out.println("Invalid option");
+                            break;
+                    }
+                }
+            }
+        } else System.out.println("Invalid command");
+    }
+
+    private boolean validate(String parameter) {
+        if (parameter == null || parameter.isEmpty()) {
             throw new CommandLine.ParameterException(spec.commandLine(),
-                    "Missing option: at least one of the " +
-                            "'<file>', '<width>', or '<height>' options must be specified.");
-        }else return true;
+                    "Missing option: at least one of the options must be specified.");
+        } else return true;
     }
 
-    private boolean missing(String parameter) {
-        return parameter == null || parameter.isEmpty();
-    }
-
-    private void setParams(String[] args){
-        this.file = args[1];
-        this.width = args[3];
-        this.height = args[4];
+    private boolean ifCommandLengthRight(String[] command, int length) {
+        if (command.length != length) {
+            System.out.println("Wrong command");
+            return false;
+        } else return true;
     }
 
     public static void main(String... args) {
@@ -52,104 +115,3 @@ class ResizerApp implements Runnable {
         System.exit(exitCode);
     }
 }
-
-class BlurApp implements Runnable {
-    @CommandLine.Spec
-    CommandLine.Model.CommandSpec spec;
-
-    @CommandLine.Parameters(description = "path of an input-file", interactive = true, hidden = true)
-    String file;
-    @CommandLine.Option(names = "--blur", description = "reduce image noise detail levels", interactive = true)
-    String radius;
-
-    @Override
-    public void run() {
-        String command = new Scanner(System.in).nextLine();
-        String[] args = command.split(" ");
-        if(args.length == 3) setParams(args);
-        else throw new CommandLine.ParameterException(spec.commandLine(), "Error: enter an option setting");
-        if(validate()) new Blurring().blurring(file, radius);
-    }
-
-    private boolean validate() {
-        if (missing(file) || missing(radius)) {
-            throw new CommandLine.ParameterException(spec.commandLine(),
-                    "Missing option: at least one of the " +
-                            "'<file>' or '<radius>' options must be specified.");
-        }else return true;
-    }
-
-    private boolean missing(String parameter) {
-        return parameter == null || parameter.isEmpty();
-    }
-
-    private void setParams(String[] args){
-        this.file = args[1];
-        this.radius = args[3];
-    }
-
-    public static void main(String... args) {
-        CommandLine cmd = new CommandLine(new BlurApp());
-        cmd.parseArgs(args);
-        int exitCode = cmd.execute(args);
-        System.exit(exitCode);
-    }
-}
-    /* protected int runConsole(String[] args) {
-        new ResizerApp().setParams(args);
-        new Resize().resize(file, width, height);
-        return new CommandLine(new ResizerApp()).execute(args);
-    }*/
-
-
-
-/*class Menu {
-    @CommandLine.Option(names = "--resize width height", description = "resize the image")
-    Void resize;
-
-    @CommandLine.Command(name = "resize")
-
-    @CommandLine.Option(names = "--quality value", description = "JPEG/PNG compression level")
-    Void compress;
-
-    @CommandLine.Option(names = "--crop width height x y", description = "@|fg(magenta)cut|@ out one rectangular area of the image")
-    Void crop;
-
-    @CommandLine.Option(names = "--blur {radius}", description = "reduce image noise detail levels")
-    Void blur;
-
-    @CommandLine.Option(names = "--format @|bold,fg(green)\"outputFormat\"|@", description = "the image @|fg(magenta)format type|@")
-    Void outputFormat;
-
-    //@CommandLine.Parameters(paramLabel = "FILE", description = "an image to change")
-    //File file;
-}
-
-class PositionalParametersResize {
-    @CommandLine.Parameters(index = "0")    File file;
-    @CommandLine.Parameters(index = "1")    String width;
-    @CommandLine.Parameters(index = "2")    String height;
-}
-
-class PositionalParametersCompress {
-    @CommandLine.Parameters(index = "0")    File file;
-    @CommandLine.Parameters(index = "1")    String qualityValue;
-}
-
-class PositionalParametersCrop {
-    @CommandLine.Parameters(index = "0")    File file;
-    @CommandLine.Parameters(index = "1")    String width;
-    @CommandLine.Parameters(index = "2")    String height;
-    @CommandLine.Parameters(index = "3")    String x;
-    @CommandLine.Parameters(index = "4")    String y;
-}
-
-class PositionalParametersBlur {
-    @CommandLine.Parameters(index = "0")    File file;
-    @CommandLine.Parameters(index = "1")    String radius;
-}
-
-class PositionalParametersFormat {
-    @CommandLine.Parameters(index = "0")    File file;
-    @CommandLine.Parameters(index = "1")    String outputFormat;
-}*/
