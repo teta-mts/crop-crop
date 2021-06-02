@@ -11,13 +11,13 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
     <dependencies>
-<!-- Работа с консольными параметрами picocli.info -->
+        <!-- Работа с консольными параметрами picocli.info -->
         <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli</artifactId>
             <version>4.6.1</version>
         </dependency>
-<!-- Библиотека для работы с изображениями и видео marvin project. Рекомендуем взять из неё  GaussianBlur и Crop -->
+        <!-- Библиотека для работы с изображениями и видео marvin project. Рекомендуем взять из неё  GaussianBlur и Crop -->
         <dependency>
             <groupId>com.github.downgoon</groupId>
             <artifactId>marvin</artifactId>
@@ -29,13 +29,13 @@
             <artifactId>MarvinPlugins</artifactId>
             <version>1.5.5</version>
         </dependency>
-<!-- Работа с изображением thumbnailator. Рекомендуем взять из неё функции обрезки  и изменения параметров картинки -->
+        <!-- Работа с изображением thumbnailator. Рекомендуем взять из неё функции обрезки  и изменения параметров картинки -->
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>0.4.11</version>
         </dependency>
-<!-- Библиотека, необходимая для запуска тестов junit5 -->
+        <!-- Библиотека, необходимая для запуска тестов junit5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -57,7 +57,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
