@@ -2,66 +2,97 @@ package mts.teta.resizer;
 
 import picocli.CommandLine;
 
+import java.util.Scanner;
+
 @CommandLine.Command(name = "convert", mixinStandardHelpOptions = true, version = "version 0.0.3",
         description = "Available formats: jpeg png\n" +
                 "Usage: convert input-file [options ...] output-file\n" +
                 "Options Settings:")
-public class ResizerApp implements Runnable {
+class ResizerApp implements Runnable {
     @CommandLine.Spec
     CommandLine.Model.CommandSpec spec;
 
     @CommandLine.Parameters(description = "path of an input-file", interactive = true, hidden = true)
     String file;
     @CommandLine.Option(names = "--resize", description = "resize the image", interactive = true)
-    boolean selected = true;
-    @CommandLine.Parameters(description = "path of an input-file")
     String width;
-    @CommandLine.Parameters(description = "path of an input-file")
     String height;
 
     @Override
     public void run() {
-        //String command = new Scanner(System.in).nextLine();
-        //String[] args = command.split(" ");
-        //setParams(args);
-        validate();
-        new Resizing().resize(file, width, height);
+        String command = new Scanner(System.in).nextLine();
+        String[] args = command.split(" ");
+        if(args.length == 5) setParams(args);
+        else throw new CommandLine.ParameterException(spec.commandLine(), "Error: enter an option setting");
+        if(validate()) new Resizing().resize(file, width, height);
     }
 
-    private void validate() {
+    private boolean validate() {
         if (missing(file) || missing(width) || missing(height)) {
             throw new CommandLine.ParameterException(spec.commandLine(),
                     "Missing option: at least one of the " +
                             "'<file>', '<width>', or '<height>' options must be specified.");
-        }
+        }else return true;
     }
 
     private boolean missing(String parameter) {
         return parameter == null || parameter.isEmpty();
     }
 
-    /*private void setParams(String[] args){
+    private void setParams(String[] args){
         this.file = args[1];
         this.width = args[3];
         this.height = args[4];
-    }*/
+    }
 
     public static void main(String... args) {
         CommandLine cmd = new CommandLine(new ResizerApp());
         cmd.parseArgs(args);
         int exitCode = cmd.execute(args);
         System.exit(exitCode);
-        //new CommandLine(new ResizerApp()).execute(args);
-        //CommandLine cmd = new CommandLine(new ResizerApp());
-        //new ResizerApp().run();
-        //for (String str: args) {
-          //  System.out.println(str);
-       // }
-        //cmd.usage(System.out);
+    }
+}
 
-        //CommandLine.run(new ResizerApp(), args);
-        //int exitCode = new ResizerApp().runConsole(args);
-        //System.exit(exitCode);
+class BlurApp implements Runnable {
+    @CommandLine.Spec
+    CommandLine.Model.CommandSpec spec;
+
+    @CommandLine.Parameters(description = "path of an input-file", interactive = true, hidden = true)
+    String file;
+    @CommandLine.Option(names = "--blur", description = "reduce image noise detail levels", interactive = true)
+    String radius;
+
+    @Override
+    public void run() {
+        String command = new Scanner(System.in).nextLine();
+        String[] args = command.split(" ");
+        if(args.length == 3) setParams(args);
+        else throw new CommandLine.ParameterException(spec.commandLine(), "Error: enter an option setting");
+        if(validate()) new Blurring().blurring(file, radius);
+    }
+
+    private boolean validate() {
+        if (missing(file) || missing(radius)) {
+            throw new CommandLine.ParameterException(spec.commandLine(),
+                    "Missing option: at least one of the " +
+                            "'<file>' or '<radius>' options must be specified.");
+        }else return true;
+    }
+
+    private boolean missing(String parameter) {
+        return parameter == null || parameter.isEmpty();
+    }
+
+    private void setParams(String[] args){
+        this.file = args[1];
+        this.radius = args[3];
+    }
+
+    public static void main(String... args) {
+        CommandLine cmd = new CommandLine(new BlurApp());
+        cmd.parseArgs(args);
+        int exitCode = cmd.execute(args);
+        System.exit(exitCode);
     }
 }
     /* protected int runConsole(String[] args) {
